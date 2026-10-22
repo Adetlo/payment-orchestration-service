@@ -1,0 +1,20 @@
+{
+  "name": "payment-orchestration-e2e",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Playwright screenshot capture for the Payment Orchestration Lab docs (synthetic data only).",
+  "type": "module",
+  "scripts": {
+    "screenshots": "playwright test --project=screenshots",
+    "install-browsers": "playwright install chromium",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "^22.19.0",
+    "typescript": "~5.9.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

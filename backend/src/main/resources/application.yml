@@ -1,0 +1,163 @@
+spring:
+  application:
+    name: payment-orchestration-service
+  profiles:
+    default: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payments
+    username: payments
+    password: payments_local
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    locations: classpath:db/migration
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      properties:
+        enable.idempotence: true
+        delivery.timeout.ms: 10000
+        request.timeout.ms: 5000
+    consumer:
+      group-id: payment-processor
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: record
+      concurrency: 2
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2s
+  mvc:
+    problemdetails:
+      enabled: true
+  jackson:
+    default-property-inclusion: always
+
+server:
+  port: 8080
+  shutdown: graceful
+  error:
+    include-stacktrace: never
+    include-message: never
+    include-exception: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: readinessState,db
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+payments:
+  failure-injection:
+    enabled: false
+  retry:
+    max-attempts: 3
+    poll-interval: 1s
+    batch-size: 20
+  outbox:
+    poll-interval: 500ms
+    batch-size: 50
+    max-attempts: 5
+  ratelimit:
+    enabled: true
+    limit: 200
+    window: 1m
+  idempotency:
+    ttl: 24h
+    lock-ttl: 10s
+    cleanup-cron: "0 0 * * * *"
+  cors:
+    allowed-origins:
+      - http://localhost:3000
+      - http://localhost:5173
+  max-request-bytes: 65536
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/payments
+  kafka:
+    bootstrap-servers: kafka:29092
+  data:
+    redis:
+      host: redis
+
+---
+spring:
+  config:
+    activate:
+      on-profile: demo
+payments:
+  failure-injection:
+    enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+payments:
+  outbox:
+    poll-interval: 200ms
+  ratelimit:
+    enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+payments:
+  failure-injection:
+    enabled: false
+springdoc:
+  swagger-ui:
+    enabled: false
+  api-docs:
+    enabled: false

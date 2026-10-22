@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Payment Orchestration Service</title>
+<meta name="viewport" content="width=1280, initial-scale=1">
+<style>
+  :root {
+    --bg: #0b1a33;
+    --bg-2: #0f2347;
+    --ink: #ffffff;
+    --ink-muted: #b7c7e6;
+    --blue: #4f8ff7;
+    --blue-soft: #86b6ef;
+    --line: rgba(134, 182, 239, 0.35);
+    --box: rgba(79, 143, 247, 0.10);
+    --box-border: rgba(134, 182, 239, 0.55);
+    --good: #3ccf7a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 640px; overflow: hidden; }
+  body {
+    background: radial-gradient(1100px 600px at 18% 18%, var(--bg-2) 0%, var(--bg) 60%);
+    color: var(--ink);
+    font-family: "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(134,182,239,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(134,182,239,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .frame { position: absolute; inset: 0; padding: 64px 72px; display: flex; flex-direction: column; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 14px; letter-spacing: 0.28em; font-size: 15px; font-weight: 600; color: var(--blue-soft); text-transform: uppercase; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 4px rgba(60,207,122,0.2); }
+  h1 { font-size: 66px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; margin-top: 18px; max-width: 760px; }
+  h1 span { color: var(--blue); }
+  .tagline { margin-top: 18px; font-size: 26px; font-weight: 500; color: var(--ink); letter-spacing: 0.01em; }
+  .stack { margin-top: 10px; font-size: 21px; color: var(--ink-muted); letter-spacing: 0.04em; }
+  .stack b { color: var(--blue-soft); font-weight: 600; }
+  .footer { display: flex; align-items: flex-end; justify-content: space-between; }
+  .url { font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 20px; color: var(--ink-muted); }
+  .url b { color: var(--ink); font-weight: 600; }
+  .schematic { position: absolute; right: 72px; top: 150px; width: 420px; }
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .node {
+    width: 300px; padding: 13px 18px; border: 1.5px solid var(--box-border); border-radius: 10px;
+    background: var(--box); font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 17px; letter-spacing: 0.06em;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .node small { font-family: inherit; font-size: 12px; color: var(--ink-muted); letter-spacing: 0.08em; }
+  .arrow { width: 2px; height: 22px; background: var(--line); position: relative; }
+  .arrow::after { content: ""; position: absolute; left: -5px; bottom: -2px; border: 6px solid transparent; border-top: 8px solid var(--blue-soft); border-bottom: 0; }
+  .kafka { border-style: dashed; }
+  .caption { margin-top: 14px; font-size: 13px; color: var(--ink-muted); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
+  .pill-row { display: flex; gap: 10px; margin-top: 22px; }
+  .pill { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--blue-soft); }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="frame">
+    <div>
+      <div class="brand"><span class="dot"></span>Payment Orchestration Lab</div>
+      <h1>Payment <span>Orchestration</span> Service</h1>
+      <div class="tagline">Event-Driven Payments</div>
+      <div class="stack">Java 21 <b>&middot;</b> Spring Boot <b>&middot;</b> Kafka <b>&middot;</b> PostgreSQL</div>
+      <div class="pill-row">
+        <span class="pill">Idempotency</span>
+        <span class="pill">Transactional outbox</span>
+        <span class="pill">Retries &amp; DLT</span>
+        <span class="pill">Reconciliation</span>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="url"><b>github.com/Adetlo</b>/payment-orchestration-service</div>
+      <div class="url">MIT &middot; synthetic data</div>
+    </div>
+  </div>
+
+  <div class="schematic" aria-hidden="true">
+    <div class="flow">
+      <div class="node">API <small>POST /payments</small></div>
+      <div class="arrow"></div>
+      <div class="node">OUTBOX <small>same transaction</small></div>
+      <div class="arrow"></div>
+      <div class="node kafka">KAFKA <small>payment.events.v1</small></div>
+      <div class="arrow"></div>
+      <div class="node">CONSUMER <small>idempotent</small></div>
+      <div class="arrow"></div>
+      <div class="node">LEDGER <small>PostgreSQL</small></div>
+    </div>
+    <div class="caption">API &rarr; Outbox &rarr; Kafka &rarr; Consumer &rarr; Ledger</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Root-level ignore; backend/ and frontend/ have their own build contexts.
+.git
+.github
+docs
+perf
+scripts
+e2e
+**/node_modules
+**/target
+**/dist
+**/coverage
+**/playwright-report
+**/test-results
+**/.env
+**/.env.*
+**/*.log
+**/.DS_Store
+**/.idea
+**/.vscode

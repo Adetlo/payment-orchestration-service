@@ -1,0 +1,51 @@
+name: Bug report
+description: Something in the service, the demo UI, the scripts or the docs does not behave as described.
+title: "[bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem. This is a synthetic demo project: please
+        do not include real account numbers or any confidential data in the report.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the problem and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. docker compose up --build
+        2. curl -X POST http://localhost:8080/api/v1/payments ...
+        3. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - backend (API, state machine, outbox, Kafka, reconciliation)
+        - frontend (demo UI)
+        - docker / compose / observability
+        - scripts / CI
+        - documentation
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Docker / Compose version, Java version if running outside Docker.
+      placeholder: macOS 15, Docker 27.x, Compose v2.30
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or problem+json response
+      description: Output of `docker compose logs backend --tail 100` or the error response. Will be rendered as code.
+      render: shell

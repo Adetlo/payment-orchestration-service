@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter xmlns="https://github.com/spotbugs/filter/3.0.0">
+  <!-- Records: the generated accessors return immutable values (or defensive copies); SpotBugs
+       cannot see through the implicit canonical constructor and reports EI_EXPOSE_REP for them. -->
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    <Or>
+      <Class name="~.*\$[A-Za-z]+"/>
+      <Class name="~io\.github\.adetlo\.payments\..*(Request|Response|Command|Query|Properties|Envelope|Result|Record|Context)"/>
+    </Or>
+  </Match>
+  <!-- Spring beans are injected with shared, framework-managed singletons by design. -->
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP2"/>
+    <Or>
+      <Class name="~io\.github\.adetlo\.payments\.(application|infrastructure|api|config|observability)\..*"/>
+    </Or>
+  </Match>
+</FindBugsFilter>

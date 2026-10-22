@@ -1,0 +1,43 @@
+# Build output
+target/
+dist/
+build/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.npm/
+.eslintcache
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Test and tooling output
+coverage/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+perf/results/*
+!perf/results/.gitkeep
+!perf/results/sample-*.json
+
+# Logs
+*.log
+logs/
+
+# IDE and OS
+.idea/
+*.iml
+.vscode/
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+*.swp

@@ -1,0 +1,6 @@
+# Overlay for benchmarks: disables the per-IP rate limit so k6 measures the service, not the limiter.
+#   docker compose -f docker-compose.yml -f perf/docker-compose.perf.yml up -d backend
+services:
+  backend:
+    environment:
+      PAYMENTS_RATELIMIT_ENABLED: "false"

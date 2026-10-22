@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Adetlo/payment-orchestration-service/security/policy
+    about: Please report vulnerabilities privately through the security policy, not as a public issue.
+  - name: Design contract
+    url: https://github.com/Adetlo/payment-orchestration-service/blob/main/docs/DESIGN.md
+    about: The design specification that backend, UI, infrastructure and docs follow.

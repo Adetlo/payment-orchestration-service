@@ -1,0 +1,18 @@
+# Prometheus configuration for the local demo stack (docs/DESIGN.md section 3).
+global:
+  scrape_interval: 5s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: payment-orchestration-service
+    metrics_path: /actuator/prometheus
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["backend:8080"]
+        labels:
+          service: payment-orchestration-service
+          env: docker-demo
+
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
