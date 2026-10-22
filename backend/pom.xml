@@ -17,6 +17,8 @@
   <description>Production-style payment orchestration service (synthetic demo)</description>
 
   <properties>
+    <!-- CVE-2026-54291 (SCRAM downgrade) is fixed in 42.7.12; the Boot BOM still manages 42.7.11. -->
+    <postgresql.version>42.7.12</postgresql.version>
     <java.version>21</java.version>
     <springdoc.version>2.9.1</springdoc.version>
     <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>

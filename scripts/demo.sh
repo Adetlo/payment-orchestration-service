@@ -29,7 +29,7 @@ command -v jq >/dev/null || { echo "jq is required (https://jqlang.github.io/jq/
 
 TMP="$(mktemp -d)"
 RUN_ID="$(date -u +%Y%m%d%H%M%S)-$$"
-# shellcheck disable=SC2329  # invoked via trap
+# shellcheck disable=SC2317,SC2329  # invoked via trap
 cleanup() {
   rm -rf "$TMP"
   if [[ "$STOP" -eq 1 ]]; then

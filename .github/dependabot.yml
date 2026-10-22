@@ -1,3 +1,4 @@
+# Major versions are reviewed manually; Dependabot proposes minor and patch updates only.
 version: 2
 updates:
   - package-ecosystem: maven
@@ -5,6 +6,9 @@ updates:
     schedule:
       interval: weekly
       day: monday
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
       spring:
         patterns: ["org.springframework*"]
@@ -17,6 +21,9 @@ updates:
     schedule:
       interval: weekly
       day: monday
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
       dev-dependencies:
         dependency-type: development
@@ -27,6 +34,9 @@ updates:
     schedule:
       interval: weekly
       day: monday
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     open-pull-requests-limit: 3
 
   - package-ecosystem: github-actions
@@ -34,6 +44,9 @@ updates:
     schedule:
       interval: weekly
       day: monday
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     open-pull-requests-limit: 5
 
   - package-ecosystem: docker
@@ -41,9 +54,15 @@ updates:
     schedule:
       interval: weekly
       day: monday
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: docker
     directory: /frontend
     schedule:
       interval: weekly
       day: monday
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
