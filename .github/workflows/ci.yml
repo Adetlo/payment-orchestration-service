@@ -168,7 +168,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Vulnerability scan (filesystem)
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
           scan-ref: .
@@ -180,7 +180,7 @@ jobs:
           skip-dirs: node_modules,target,dist
 
       - name: Misconfiguration scan (Dockerfiles, compose, workflows)
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: config
           scan-ref: .
