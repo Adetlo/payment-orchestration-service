@@ -11,7 +11,7 @@ RUN mvn -q -B -DskipTests -Dspotless.check.skip=true -Dspotbugs.skip=true -Djaco
     && cp target/payment-orchestration-service-*.jar /workspace/app.jar
 
 # ---- runtime stage ----
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:24-jre-alpine
 RUN addgroup -g 10001 -S app && adduser -u 10001 -S -G app -h /app app
 WORKDIR /app
 COPY --from=build --chown=app:app /workspace/app.jar /app/app.jar
